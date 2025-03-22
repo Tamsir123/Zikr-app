@@ -12,12 +12,12 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
-        primarySwatch: Colors.blue,
+        primarySwatch: Colors.green,
         visualDensity: VisualDensity.adaptivePlatformDensity,
         brightness: Brightness.light,
       ),
       darkTheme: ThemeData(
-        primarySwatch: Colors.blue,
+        primarySwatch: Colors.green,
         visualDensity: VisualDensity.adaptivePlatformDensity,
         brightness: Brightness.dark,
       ),
@@ -36,10 +36,11 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> {
   int _selectedIndex = 0;
-  
+  int _totalZikr = 3460; // Nombre total de Zikr
+
   static const List<Color> _iconColors = [
-    Colors.indigo,
     Colors.green,
+    Colors.indigo,
     Colors.orange,
     Colors.purple,
   ];
@@ -58,17 +59,11 @@ class _HomeScreenState extends State<HomeScreen> {
         backgroundColor: Theme.of(context).scaffoldBackgroundColor,
         leading: const Padding(
           padding: EdgeInsets.all(8.0),
-            child: Icon(
-              Icons.person,
-              color: Colors.blue,
-          ),
+          child: Icon(Icons.person, color: Colors.green),
         ),
         actions: [
           IconButton(
-            icon: const Icon(
-              Icons.settings,
-              color: Colors.blue,
-            ),
+            icon: const Icon(Icons.settings, color: Colors.green),
             onPressed: () {},
           ),
           const Padding(padding: EdgeInsets.symmetric(horizontal: 8)),
@@ -76,77 +71,254 @@ class _HomeScreenState extends State<HomeScreen> {
       ),
       body: Column(
         children: [
-          // Partie supérieure
+          // Partie supérieure avec le Zikr en arabe et le compteur total
           Expanded(
             flex: 1,
             child: Container(
               decoration: BoxDecoration(
-                color: Colors.blue.withOpacity(0.1),
+                color: Colors.green.withOpacity(0.1),
                 borderRadius: BorderRadius.circular(16),
                 boxShadow: [
                   BoxShadow(
-                    color: Colors.blue.withOpacity(0.05),
+                    color: Colors.green.withOpacity(0.05),
                     blurRadius: 8,
                     offset: const Offset(0, 2),
                   ),
                 ],
+                image: DecorationImage(
+                  image: AssetImage('assets/images/zikr_img.jpeg'),
+                  fit: BoxFit.cover,
+                  // opacity: 0.08,
+                 
+                ),
               ),
               margin: const EdgeInsets.all(16),
               width: double.infinity,
-              child: const Center(
-                child: Text(
-                  'Hello, Flutter!',
-                  style: TextStyle(
-                    fontSize: 28,
-                    fontWeight: FontWeight.bold,
-                    color: Colors.blue,
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  // Container semi-transparent pour améliorer la lisibilité du texte arabe
+                  Container(
+                    padding: const EdgeInsets.symmetric(
+                      horizontal: 20,
+                      vertical: 10,
+                    ),
+                    decoration: BoxDecoration(
+                      gradient: LinearGradient(
+                        colors: [
+                          Colors.white.withOpacity(0.7),
+                          Colors.white.withOpacity(0.5),
+                        ],
+                        begin: Alignment.topCenter,
+                        end: Alignment.bottomCenter,
+                      ),
+                      borderRadius: BorderRadius.circular(15),
+                      boxShadow: [
+                        BoxShadow(
+                          color: Colors.black.withOpacity(0.05),
+                          blurRadius: 4,
+                          offset: const Offset(0, 2),
+                        ),
+                      ],
+                    ),
+                    child: const Text(
+                      'سُبْحَانَ اللَّهِ وَبِحَمْدِهِ',
+                      style: TextStyle(
+                        fontSize: 32,
+                        fontWeight: FontWeight.bold,
+                        fontFamily: 'Amiri',
+                        color: Colors.green,
+                        shadows: [
+                          Shadow(
+                            offset: Offset(0, 1),
+                            blurRadius: 1.0,
+                            color: Color.fromARGB(70, 0, 0, 0),
+                          ),
+                        ],
+                      ),
+                      textAlign: TextAlign.center,
+                    ),
                   ),
-                ),
+                  const SizedBox(height: 10),
+                  // Texte de translittération avec un fond subtil
+                  Container(
+                    padding: const EdgeInsets.symmetric(
+                      horizontal: 12,
+                      vertical: 4,
+                    ),
+                    decoration: BoxDecoration(
+                      color: Colors.white.withOpacity(0.5),
+                      borderRadius: BorderRadius.circular(12),
+                    ),
+                    child: const Text(
+                      'Soubhan Allah wa bihamdihi',
+                      style: TextStyle(
+                        fontSize: 16,
+                        fontStyle: FontStyle.italic,
+                        color: Colors.green,
+                        letterSpacing: 0.5,
+                      ),
+                      textAlign: TextAlign.center,
+                    ),
+                  ),
+                  const SizedBox(height: 24),
+                  // Compteur total amélioré
+                  Container(
+                    padding: const EdgeInsets.symmetric(
+                      horizontal: 24,
+                      vertical: 12,
+                    ),
+                    decoration: BoxDecoration(
+                      gradient: LinearGradient(
+                        colors: [
+                          Colors.green.withOpacity(0.7),
+                          Colors.green.withOpacity(0.5),
+                        ],
+                        begin: Alignment.topLeft,
+                        end: Alignment.bottomRight,
+                      ),
+                      borderRadius: BorderRadius.circular(20),
+                      boxShadow: [
+                        BoxShadow(
+                          color: Colors.green.withOpacity(0.2),
+                          blurRadius: 6,
+                          offset: const Offset(0, 3),
+                        ),
+                      ],
+                    ),
+                    child: Row(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        
+                        const SizedBox(width: 8),
+                        Text(
+                          '$_totalZikr',
+                          style: const TextStyle(
+                            fontSize: 32,
+                            fontWeight: FontWeight.bold,
+                            color: Colors.white,
+                            letterSpacing: 1,
+                            shadows: [
+                              Shadow(
+                                offset: Offset(0, 1),
+                                blurRadius: 2.0,
+                                color: Color.fromARGB(100, 0, 0, 0),
+                              ),
+                            ],
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                ],
               ),
             ),
           ),
-          // Partie inférieure avec la liste de personnes
+
+          // Partie inférieure avec la liste de personnes centrée
           Expanded(
             flex: 2,
-            child: ListView.separated(
-              padding: const EdgeInsets.symmetric(vertical: 8),
-              itemCount: personnesList.length,
-              separatorBuilder: (context, index) => const Divider(height: 1, indent: 72),
-              itemBuilder: (context, index) {
-                final person = personnesList[index];
-                final String name = person['nom'] ?? 'Unknown';
-                final String role = person['role'] ?? 'Unknown';
-                final Color avatarColor = _getAvatarColor(name);
-                
-                return ListTile(
-                  contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 4),
-                  leading: CircleAvatar(
-                    backgroundColor: avatarColor,
-                    child: Text(
-                      name[0],
-                      style: const TextStyle(
-                        color: Colors.white,
-                        fontWeight: FontWeight.bold,
+            child: Container(
+              margin: const EdgeInsets.symmetric(horizontal: 16),
+              child: ListView.builder(
+                itemCount: personnesList.length,
+                itemBuilder: (context, index) {
+                  final person = personnesList[index];
+                  final String name = person['nom'] ?? 'Unknown';
+                  final String role = person['role'] ?? 'Unknown';
+                  final int zikrCount = int.parse(person['zikrCount'] ?? '0');
+                  final Color avatarColor = _getAvatarColor(name);
+
+                  return Card(
+                    elevation: 2,
+                    margin: const EdgeInsets.symmetric(vertical: 6),
+                    child: Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Row(
+                        children: [
+                          // Position numéro
+                          Container(
+                            width: 30,
+                            height: 30,
+                            decoration: BoxDecoration(
+                              color:
+                                  index < 3
+                                      ? Colors.amber
+                                      : Colors.grey.shade300,
+                              shape: BoxShape.circle,
+                            ),
+                            alignment: Alignment.center,
+                            child: Text(
+                              '${index + 1}',
+                              style: TextStyle(
+                                fontWeight: FontWeight.bold,
+                                color:
+                                    index < 3 ? Colors.white : Colors.black87,
+                              ),
+                            ),
+                          ),
+                          const SizedBox(width: 12),
+
+                          // Avatar et informations de la personne
+                          CircleAvatar(
+                            backgroundColor: avatarColor,
+                            child: Text(
+                              name[0],
+                              style: const TextStyle(
+                                color: Colors.white,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                          ),
+                          const SizedBox(width: 16),
+                          Expanded(
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text(
+                                  name,
+                                  style: const TextStyle(
+                                    fontWeight: FontWeight.w600,
+                                  ),
+                                ),
+                                Text(
+                                  role,
+                                  style: TextStyle(
+                                    color:
+                                        Theme.of(
+                                          context,
+                                        ).textTheme.bodySmall?.color,
+                                    fontSize: 12,
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+
+                          // Compteur de Zikr
+                          Container(
+                            padding: const EdgeInsets.symmetric(
+                              horizontal: 12,
+                              vertical: 6,
+                            ),
+                            decoration: BoxDecoration(
+                              color: Colors.green.withOpacity(0.1),
+                              borderRadius: BorderRadius.circular(16),
+                            ),
+                            child: Text(
+                              '$zikrCount',
+                              style: const TextStyle(
+                                fontWeight: FontWeight.bold,
+                                color: Colors.green,
+                              ),
+                            ),
+                          ),
+                        ],
                       ),
                     ),
-                  ),
-                  title: Text(
-                    name,
-                    style: const TextStyle(fontWeight: FontWeight.w600),
-                  ),
-                  subtitle: Text(
-                    role,
-                    style: TextStyle(
-                      color: Theme.of(context).textTheme.bodySmall?.color,
-                    ),
-                  ),
-                  trailing: const Icon(
-                    Icons.arrow_forward_ios,
-                    size: 16,
-                    color: Colors.grey,
-                  ),
-                );
-              },
+                  );
+                },
+              ),
             ),
           ),
         ],
@@ -160,105 +332,42 @@ class _HomeScreenState extends State<HomeScreen> {
         showUnselectedLabels: true,
         items: [
           BottomNavigationBarItem(
-            icon: Icon(Icons.home, color: _selectedIndex == 0 ? _iconColors[0] : Colors.grey),
+            icon: Icon(
+              Icons.home,
+              color: _selectedIndex == 0 ? _iconColors[0] : Colors.grey,
+            ),
             label: 'Accueil',
           ),
           BottomNavigationBarItem(
-            icon: Icon(Icons.book, color: _selectedIndex == 1 ? _iconColors[1] : Colors.grey),
+            icon: Icon(
+              Icons.book,
+              color: _selectedIndex == 1 ? _iconColors[1] : Colors.grey,
+            ),
             label: 'Coran',
           ),
           BottomNavigationBarItem(
-            icon: Icon(Icons.chat, color: _selectedIndex == 2 ? _iconColors[2] : Colors.grey),
+            icon: Icon(
+              Icons.chat,
+              color: _selectedIndex == 2 ? _iconColors[2] : Colors.grey,
+            ),
             label: 'Discussion',
           ),
           BottomNavigationBarItem(
-            icon: Icon(Icons.person, color: _selectedIndex == 3 ? _iconColors[3] : Colors.grey),
+            icon: Icon(
+              Icons.person,
+              color: _selectedIndex == 3 ? _iconColors[3] : Colors.grey,
+            ),
             label: 'Profil',
           ),
         ],
       ),
     );
   }
-  
-  void _showPersonDetails(BuildContext context, Map<String, String> person) {
-    final String name = person['nom'] ?? 'Unknown';
-    final String role = person['role'] ?? 'Unknown';
-    
-    showModalBottomSheet(
-      context: context,
-      shape: const RoundedRectangleBorder(
-        borderRadius: BorderRadius.vertical(top: Radius.circular(20)),
-      ),
-      builder: (context) => Container(
-        padding: const EdgeInsets.all(20),
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            CircleAvatar(
-              radius: 40,
-              backgroundColor: _getAvatarColor(name),
-              child: Text(
-                name[0],
-                style: const TextStyle(
-                  fontSize: 28,
-                  color: Colors.white,
-                  fontWeight: FontWeight.bold,
-                ),
-              ),
-            ),
-            const SizedBox(height: 16),
-            Text(
-              name,
-              style: const TextStyle(
-                fontSize: 24,
-                fontWeight: FontWeight.bold,
-              ),
-            ),
-            const SizedBox(height: 8),
-            Text(
-              role,
-              style: const TextStyle(
-                fontSize: 16,
-                color: Colors.grey,
-              ),
-            ),
-            const SizedBox(height: 20),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              children: [
-                _buildActionButton(Icons.message, Colors.blue, 'Message'),
-                _buildActionButton(Icons.call, Colors.green, 'Appeler'),
-                _buildActionButton(Icons.info, Colors.orange, 'Info'),
-              ],
-            ),
-          ],
-        ),
-      ),
-    );
-  }
-  
-  Widget _buildActionButton(IconData icon, Color color, String label) {
-    return Column(
-      mainAxisSize: MainAxisSize.min,
-      children: [
-        CircleAvatar(
-          backgroundColor: color.withOpacity(0.1),
-          radius: 25,
-          child: Icon(
-            icon,
-            color: color,
-          ),
-        ),
-        const SizedBox(height: 8),
-        Text(label),
-      ],
-    );
-  }
-  
+
   Color _getAvatarColor(String name) {
     final List<Color> colors = [
-      Colors.blue,
       Colors.green,
+      Colors.blue,
       Colors.orange,
       Colors.purple,
       Colors.pink,
@@ -266,21 +375,21 @@ class _HomeScreenState extends State<HomeScreen> {
       Colors.indigo,
       Colors.red,
     ];
-    
+
     // Utiliser le code du premier caractère pour déterminer la couleur
     final int index = name.codeUnitAt(0) % colors.length;
     return colors[index];
   }
 }
 
-// Liste de personnes à afficher
+// Liste de personnes avec leur compteur de Zikr
 final List<Map<String, String>> personnesList = [
-  {'nom': 'Ahmed', 'role': 'Administrateur'},
-  {'nom': 'Fatima', 'role': 'Modérateur'},
-  {'nom': 'Omar', 'role': 'Utilisateur'},
-  {'nom': 'Aisha', 'role': 'Utilisateur'},
-  {'nom': 'Mohammed', 'role': 'Modérateur'},
-  {'nom': 'Khadija', 'role': 'Utilisateur'},
-  {'nom': 'Ibrahim', 'role': 'Utilisateur'},
-  {'nom': 'Zaynab', 'role': 'Administrateur'},
+  {'nom': 'Ahmed', 'role': 'Administrateur', 'zikrCount': '587'},
+  {'nom': 'Fatima', 'role': 'Modérateur', 'zikrCount': '429'},
+  {'nom': 'Omar', 'role': 'Utilisateur', 'zikrCount': '321'},
+  {'nom': 'Aisha', 'role': 'Utilisateur', 'zikrCount': '289'},
+  {'nom': 'Mohammed', 'role': 'Modérateur', 'zikrCount': '246'},
+  {'nom': 'Khadija', 'role': 'Utilisateur', 'zikrCount': '205'},
+  {'nom': 'Ibrahim', 'role': 'Utilisateur', 'zikrCount': '183'},
+  {'nom': 'Zaynab', 'role': 'Administrateur', 'zikrCount': '142'},
 ];

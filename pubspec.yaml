@@ -33,6 +33,7 @@ dependencies:
     sdk: flutter
   cupertino_icons: ^1.0.8
   flutter_svg: ^2.0.10  # Added flutter_svg dependency
+  provider: ^6.0.5  # Adding provider package for state management
 
 dev_dependencies:
   flutter_test:
